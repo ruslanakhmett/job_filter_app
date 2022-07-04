@@ -14,8 +14,13 @@ services:
     build: .
     env_file:
       - .env.dev
-    command: >
-      sh -c "sleep 1 && python manage.py collectstatic --no-input --clear && python manage.py migrate --noinput && python manage.py createsuperuserwithpassword --username admin --password admin --email admin@example.org --preserve && gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000"
+    entrypoint: ["/bin/sh","-c"]
+    command:
+    -  |
+        python manage.py collectstatic --no-input --clear
+        python manage.py migrate --noinput
+        python manage.py createsuperuserwithpassword --username $${DJANGO_SUPERUSER_USERNAME} --password $${DJANGO_SUPERUSER_PASSWORD} --email $${DJANGO_SUPERUSER_EMAIL} --preserve
+        gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
               
     volumes:
       - static_volume:/job_filter_app/staticfiles
