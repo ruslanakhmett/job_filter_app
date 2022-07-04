@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+
+  db:
+    image: postgres:12.0-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env.dev
+
+  web:
+    build: .
+    env_file:
+      - .env.dev
+    command: >
+      sh -c "sleep 1 && python manage.py collectstatic --no-input --clear && python manage.py migrate --noinput && python manage.py createsuperuserwithpassword --username admin --password admin --email admin@example.org --preserve && gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000"
+              
+    volumes:
+      - static_volume:/job_filter_app/staticfiles
+    expose:
+      - 8000
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/job_filter_app/staticfiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
