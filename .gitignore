@@ -42,8 +42,10 @@ coverage.xml
 *.pot
 *.pyc
 __pycache__/
-local_settings.py
+
+#my
 .env.dev
 db.sqlite3
 venv/
 dev_settings.py
+poolbot.py

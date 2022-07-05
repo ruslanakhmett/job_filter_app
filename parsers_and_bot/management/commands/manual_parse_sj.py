@@ -3,10 +3,11 @@ from parsers_and_bot.models import Vacancy
 import os
 
 
-SECRET_KEY = os.environ.get("SECRET_KEY_SJ")
+
+#SECRET_KEY = os.environ.get("SECRET_KEY_SJ")
 SUPER_JOB_API = f'https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]='
 #super_job_api = 'https://api.superjob.ru/2.0/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]=python программист'
-headers = {'X-Api-App-Id': SECRET_KEY}
+headers = {'X-Api-App-Id': 'v3.h.4216098.4c73b41904ddadb70fed26eeabe10cd3f497b5be.63a1b654102ff3a355cbdfd8a34deb75cf7e110f'}
 
 
 def go_parse_sj(vacancy_name, user_name, tg_chat_id, sity, start_when_unix, only_with_salary, salary_max, salary_min):
@@ -25,12 +26,12 @@ def go_parse_sj(vacancy_name, user_name, tg_chat_id, sity, start_when_unix, only
     data = req.content.decode()
     req.close()
     jsObj = json.loads(data)
-    f = open('/job_filter_app/resources/files_sj/data_file.json', mode='w', encoding='utf8')
+    f = open('./resources/files_sj/data_file.json', mode='w', encoding='utf8')
     f.write(json.dumps(jsObj, ensure_ascii=False))
     f.close()
     time.sleep(1)
 
-    f = open('/job_filter_app/resources/files_sj/data_file.json', encoding='utf8')
+    f = open('./resources/files_sj/data_file.json', encoding='utf8')
     jsonText = f.read()
     f.close()
     jsonObj = json.loads(jsonText)

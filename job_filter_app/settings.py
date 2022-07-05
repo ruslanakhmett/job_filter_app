@@ -16,7 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_createsuperuserwithpassword',
-    'parsers_and_bot'
+    'parsers_and_bot',
+    'webface'
 ]
 
 MIDDLEWARE = [

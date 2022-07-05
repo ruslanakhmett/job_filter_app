@@ -7,3 +7,7 @@ stop:
 
 run:
 	docker-compose up -d
+
+dbin:
+	docker-compose exec db psql --username=django_user --dbname=django_db_docker
+

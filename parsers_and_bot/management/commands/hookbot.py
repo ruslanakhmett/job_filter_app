@@ -1,12 +1,11 @@
 from django.core.management.base import BaseCommand
 import time, flask, telebot
-from hh_parser.models import Vacancy, Global_Users
+from parsers_and_bot.models import Vacancy, Global_Users
 from django.contrib.auth.models import User
 from time import sleep
 from .manual_parse_hh import go_parse_hh
 from .manual_parse_sj import go_parse_sj
 from random import randint
-
 
 
 class Command(BaseCommand):
@@ -16,8 +15,8 @@ class Command(BaseCommand):
         WEBHOOK_HOST = '80.87.198.203'
         WEBHOOK_PORT = 8443
         WEBHOOK_LISTEN = '0.0.0.0'
-        WEBHOOK_SSL_CERT = '/job_filter_app/resources/certs/webhook_cert.pem'
-        WEBHOOK_SSL_PRIV = '/job_filter_app/resources/certs//webhook_pkey.pem'
+        WEBHOOK_SSL_CERT = './resources/certs/webhook_cert.pem'
+        WEBHOOK_SSL_PRIV = './resources/certs/webhook_pkey.pem'
         WEBHOOK_URL_BASE = f"https://{WEBHOOK_HOST}:{WEBHOOK_PORT}"
         WEBHOOK_URL_PATH = f"/{TOKEN}/"
         
@@ -78,9 +77,8 @@ class Command(BaseCommand):
                     sleep(2)
 
                     bot.send_message(message.chat.id, f"Нашли {Vacancy.objects.all().filter(tg_id=message.chat.id).count()} подходящих вакансий.")
-                    bot.send_message(message.chat.id, "Вы можете воспользоваться командой /give_1 для их просмотра.")
+                    bot.send_message(message.chat.id, "Вы можете воспользоваться командой /give_me для их просмотра.")
                     break
-
 
         #запуск поиска вручную
         @bot.message_handler(commands=['run_find'])
@@ -142,7 +140,6 @@ class Command(BaseCommand):
         #очистка базы пользовательская
         @bot.message_handler(commands=['clean_base'])
         def start_command(message):
-
             for vac in Vacancy.objects.filter(tg_id=message.chat.id):
                     vac.delete()
             bot.send_message(message.chat.id, "База очищена")
@@ -151,10 +148,10 @@ class Command(BaseCommand):
         #очистка базы всей полностью, только для админа
         @bot.message_handler(commands=['clean_all'])
         def start_command(message):
-            
             for vac in Vacancy.objects.all():
                 vac.delete()
             bot.send_message(message.chat.id, "Done")
+
 
         bot.remove_webhook()
         time.sleep(1)

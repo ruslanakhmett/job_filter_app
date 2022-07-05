@@ -1,4 +1,4 @@
-import requests, json, time, datetime
+import requests, json, time
 from parsers_and_bot.models import Vacancy
 
 
@@ -16,13 +16,13 @@ def go_parse_hh(vacancy_name_durty, user_name, tg_chat_id, sity, start_when, onl
         req.close()
     
         jsObj = json.loads(data)
-        f = open('/job_filter_app/resources/files_hh/files_hh/cityes_data.json', mode='w', encoding='utf8')
+        f = open('./resources/files_hh/files_hh/cityes_data.json', mode='w', encoding='utf8')
         f.write(json.dumps(jsObj, ensure_ascii=False))
         f.close()
     
         time.sleep(1)
         #берем нужный id города в соответствии с введенным юзером названием для подстановки в запрос
-        f = open('/job_filter_app/resources/files_hh/files_hhh/cityes_data.json', encoding='utf8')
+        f = open('./resources/files_hh/files_hhh/cityes_data.json', encoding='utf8')
         jsonText = f.read()
         f.close()
         jsonObj = json.loads(jsonText)    
@@ -57,12 +57,12 @@ def go_parse_hh(vacancy_name_durty, user_name, tg_chat_id, sity, start_when, onl
     req.close()
     
     jsObj = json.loads(data)
-    f = open('files_hh/data_file.json', mode='w', encoding='utf8')
+    f = open('./resources/files_hh/data_file.json', mode='w', encoding='utf8')
     f.write(json.dumps(jsObj, ensure_ascii=False))
     f.close()
     time.sleep(1)
 
-    f = open('files_hh/data_file.json', encoding='utf8')
+    f = open('./resources/files_hh/data_file.json', encoding='utf8')
     jsonText = f.read()
     f.close()
     jsonObj = json.loads(jsonText)
@@ -77,7 +77,6 @@ def go_parse_hh(vacancy_name_durty, user_name, tg_chat_id, sity, start_when, onl
         published_time = param['published_at'].split('T')[1].split('+')[0]
 
         try:
-            
             Vacancy.objects.create(
                 vac_id=vac_id,
                 name=name,
