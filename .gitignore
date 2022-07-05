@@ -46,3 +46,4 @@ local_settings.py
 .env.dev
 db.sqlite3
 venv/
+dev_settings.py
