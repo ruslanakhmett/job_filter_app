@@ -1,6 +1,11 @@
 import os
 
 
+try:
+    from .dev_settings import *
+except ImportError:
+    from .prod_settings import *
+
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
 
 INSTALLED_APPS = [
@@ -10,7 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_createsuperuserwithpassword'
+    'django_createsuperuserwithpassword',
+    'parsers_and_bot'
 ]
 
 MIDDLEWARE = [

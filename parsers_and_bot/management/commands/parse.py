@@ -1,6 +1,6 @@
 import requests, json, time, datetime
 from django.core.management.base import BaseCommand
-from hh_parser.models import Vacancy, Global_Users
+from parsers_and_bot.models import Vacancy, Global_Users
 
 
 class Command(BaseCommand):
@@ -18,12 +18,12 @@ class Command(BaseCommand):
             req.close()
             
             jsObj = json.loads(data)
-            f = open('files_hh/data_file.json', mode='w', encoding='utf8')
+            f = open('job_filter_app/resources/data_file.json', mode='w', encoding='utf8')
             f.write(json.dumps(jsObj, ensure_ascii=False))
             f.close()
             time.sleep(3)
             
-            f = open('files_hh/data_file.json', encoding='utf8')
+            f = open('job_filter_app/resources/data_file.json', encoding='utf8')
             jsonText = f.read()
             f.close()
             jsonObj = json.loads(jsonText)
