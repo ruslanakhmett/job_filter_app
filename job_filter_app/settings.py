@@ -1,9 +1,5 @@
+import os
 
-
-try:
-    from .dev_settings import *
-except ImportError:
-    from .prod_settings import *
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
 
@@ -75,3 +71,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = "/staticfiles/"
+
+
+try:
+    from .dev_settings import *
+except ImportError:
+    from .prod_settings import *
