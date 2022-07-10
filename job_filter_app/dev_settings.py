@@ -7,7 +7,7 @@ DEBUG = True
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ALLOWED_HOSTS = ['127.0.0.1', '80.87.198.203']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 DATABASES = {
     "default": {
