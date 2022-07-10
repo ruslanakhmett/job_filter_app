@@ -21,7 +21,6 @@ pytz==2022.1
 requests==2.28.1
 sqlparse==0.4.2
 supertools==1.0.1
-supervisor==4.2.4
 typing_extensions==4.3.0
 tzdata==2022.1
 urllib3==1.26.9
