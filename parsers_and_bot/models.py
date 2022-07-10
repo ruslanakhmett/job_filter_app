@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Vacancy(models.Model):
     url = models.CharField(max_length=250, blank=True)
     name = models.CharField(max_length=250, blank=True)

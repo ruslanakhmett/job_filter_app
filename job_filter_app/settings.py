@@ -1,12 +1,13 @@
 import os
 
-
 try:
     from .dev_settings import *
 except ImportError:
     from .prod_settings import *
 
+
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -30,7 +31,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'job_filter_app.urls'
+
 
 TEMPLATES = [
     {
@@ -48,7 +51,9 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'job_filter_app.wsgi.application'
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -78,9 +83,3 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = "/staticfiles/"
-
-
-try:
-    from .dev_settings import *
-except ImportError:
-    from .prod_settings import *
