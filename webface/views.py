@@ -19,7 +19,6 @@ def register(request):
             login(request, user)
             add_user = Global_Users(name=user.username, tg_chat_id=0, salary_min=0, salary_max=0, email=user.email)
             add_user.save()
-            time.sleep(1.3)
             messages.success(request, 'success!')
             return redirect('cabinet')
         else:
@@ -51,9 +50,9 @@ def singin(request):
 
 
 def cabinet(request):
-    our_chelovek =  Global_Users.objects.get(name=request.user.username)
-    if len(our_chelovek.vacancy_name) > 2:
-        data = {"vacancy_name": our_chelovek.vacancy_name, "sity": our_chelovek.sity, "salary_min": our_chelovek.salary_min, "salary_max": our_chelovek.salary_max, "start_when": our_chelovek.start_when, "only_with_salary": our_chelovek.only_with_salary}
+    the_user =  Global_Users.objects.get(name=request.user.username)
+    if len(the_user.vacancy_name) > 2:
+        data = {"vacancy_name": the_user.vacancy_name, "sity": the_user.sity, "salary_min": the_user.salary_min, "salary_max": the_user.salary_max, "start_when": the_user.start_when, "only_with_salary": the_user.only_with_salary}
     else:
         data = {"vacancy_name": '', "sity": '', "salary_min": '', "salary_max": '', "start_when": '', "only_with_salary": ''}
     

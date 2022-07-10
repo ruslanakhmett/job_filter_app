@@ -9,6 +9,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env.dev
+    restart: always
 
   web:
     build: .
@@ -22,9 +23,9 @@ services:
         nohup python3 manage.py poolbot &
         python manage.py createsuperuserwithpassword --username $${DJANGO_SUPERUSER_USERNAME} --password $${DJANGO_SUPERUSER_PASSWORD} --email $${DJANGO_SUPERUSER_EMAIL} --preserve
         gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
-
     volumes:
       - static_volume:/job_filter_app/staticfiles
+    restart: always
     expose:
       - 8000
     depends_on:
@@ -38,6 +39,13 @@ services:
       - 80:80
     depends_on:
       - web
+    restart: always
+  
+  supervisor:
+    build: ./supervisor
+    depends_on:
+      - web
+    restart: always
 
 volumes:
   postgres_data:
