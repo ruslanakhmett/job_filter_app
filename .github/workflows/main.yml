@@ -12,11 +12,11 @@ jobs:
       matrix:
         python-version: [3.8]
         database-name:
-          - zoo_django_actions
+          - django_db
         database-password:
-          - postgres
+          - 12345wW!
         database-user:
-          - postgres
+          - django_user
         database-host:
           - 127.0.0.1
         database-port:
@@ -24,7 +24,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:12.0-alpine
         env:
           POSTGRES_DB: ${{ matrix.database-name }}
           POSTGRES_USER: ${{ matrix.database-user }}
@@ -77,12 +77,12 @@ jobs:
         POSTGRES_DB: ${{ matrix.database-name }}
       run: |
         export DATABASE_URL=postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        export SECRET_KEY=test-secret-key
+        export SECRET_KEY=refwekj4kj54kj35nr43fj34f42lf4
         export DEBUG=1
     - name: Run migrations
       run: |
         export DATABASE_URL=postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        export SECRET_KEY=test-secret-key
+        export SECRET_KEY=refwekj4kj54kj35nr43fj34f42lf4
         export DEBUG=1
         export ALLOWED_HOSTS=127.0.0.1
         export GITHUB_WORKFLOW=True
@@ -96,9 +96,9 @@ jobs:
           python manage.py test
       env:
         DATABASE_URL: postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        SECRET_KEY: test-secret-key
+        SECRET_KEY: refwekj4kj54kj35nr43fj34f42lf4
         DEBUG: 1
-        ALLOWED_HOSTS: localhost
+        ALLOWED_HOSTS: 127.0.0.1
         GITHUB_WORKFLOW: True
         MODE: workflow
     - uses: actions/checkout@v2.4.0
