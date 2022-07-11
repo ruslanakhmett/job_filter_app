@@ -12,11 +12,11 @@ jobs:
       matrix:
         python-version: [3.8]
         database-name:
-          - django_db_test
+          - django_db
         database-password:
           - 12345rr!!
         database-user:
-          - django_user_test
+          - django_user
         database-host:
           - 127.0.0.1
         database-port:
