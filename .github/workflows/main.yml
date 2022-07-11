@@ -1,4 +1,4 @@
-name: Zoo Django Actions
+name: My CI
 
 on: [push]
 
