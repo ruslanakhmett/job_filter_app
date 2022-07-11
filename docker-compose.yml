@@ -8,17 +8,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .env.dev
+      - .env
     restart: always
 
   web:
     build: .
     env_file:
-      - .env.dev
+      - .env
     entrypoint: ["/bin/sh","-c"]
     command:
     -  |
         python manage.py collectstatic --no-input --clear
+        python manage.py makemigrations
         python manage.py migrate --noinput
         nohup python3 manage.py poolbot &
         python manage.py createsuperuserwithpassword --username $${DJANGO_SUPERUSER_USERNAME} --password $${DJANGO_SUPERUSER_PASSWORD} --email $${DJANGO_SUPERUSER_EMAIL} --preserve

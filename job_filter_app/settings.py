@@ -1,24 +1,8 @@
 import os
-
-
-SECRET_KEY = 'refwekj4kj54kj35nr43fj34f42lf4'
-
-DEBUG = True
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": 'django_db',
-        "USER": 'django_user',
-        "PASSWORD": '12345wW!',
-        "HOST": '127.0.0.1',
-        "PORT": 5432
-    }
-}
+try:
+    from .dev_settings import *
+except ImportError:
+    from .prod_settings import *
 
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
