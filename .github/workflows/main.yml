@@ -8,15 +8,15 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         python-version: [3.8]
         database-name:
-          - django_db
+          - django_db_test
         database-password:
-          - 12345wW!
+          - 12345rr!!
         database-user:
-          - django_user
+          - django_user_test
         database-host:
           - 127.0.0.1
         database-port:
