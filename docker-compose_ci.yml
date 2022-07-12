@@ -1,0 +1,47 @@
+version: '3.7'
+services:
+
+  db:
+    image: postgres:12.0-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    restart: always
+
+  web:
+    build: .
+
+    entrypoint: ["/bin/sh","-c"]
+    command:
+    -  |
+        python manage.py collectstatic --no-input --clear
+        nohup python3 manage.py poolbot &
+        gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/job_filter_app/staticfiles
+    restart: always
+    expose:
+      - 8000
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/job_filter_app/staticfiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    restart: always
+  
+  supervisor:
+    build: ./supervisor
+    depends_on:
+      - web
+    restart: always
+
+volumes:
+  postgres_data:
+  static_volume:
