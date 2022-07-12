@@ -1,14 +1,21 @@
 import os
+from decouple import config
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'refwekj4kj54kj35nr43fj34f42lf4'
 
-DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+DATABASES = {
+    "default": {
+        "ENGINE": config("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": config("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": config("POSTGRES_USER", "user"),
+        "PASSWORD": config("POSTGRES_PASSWORD", "password"),
+        "HOST": config("SQL_HOST", "localhost"),
+        "PORT": config("SQL_PORT", "5432"),
+    }
+}
 
 DATABASES = {
     "default": {
@@ -25,13 +32,17 @@ if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
            'ENGINE': 'django.db.backends.postgresql',
-           'NAME': 'django_db2',
-           'USER': 'django_user2',
-           'PASSWORD': '12345wW!2',
+           'NAME': 'django_db_test',
+           'USER': 'django_user_test',
+           'PASSWORD': 'pass_test',
            'HOST': '127.0.0.1',
            'PORT': 5432,
         }
     }
+    SECRET_KEY = 'refwekj4kj54kj35nr43fj34f42lf4'
+    DEBUG = True
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
 
