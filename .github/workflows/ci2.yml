@@ -18,8 +18,8 @@ jobs:
         # Устанавливаем зависимости
         run: pip install -r req.txt
       - name: run tests
-        python manage.py test
-        run: coverage run src/tests.py
+        run: python manage.py test
+
 
  build_and_pub:
     # Если тесты были пройдены успешно
