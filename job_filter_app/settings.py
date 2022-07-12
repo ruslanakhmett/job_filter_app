@@ -2,6 +2,22 @@ import os
 from decouple import config
 
 
+if os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'django_db_test',
+           'USER': 'django_user_test',
+           'PASSWORD': 'pass_test',
+           'HOST': '127.0.0.1',
+           'PORT': 5432,
+        }
+    }
+    SECRET_KEY = 'test_key'
+    DEBUG = True
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = config("SECRET_KEY")
@@ -21,22 +37,6 @@ DATABASES = {
         "PORT": config("SQL_PORT"),
     }
 }
-
-
-if os.environ.get('GITHUB_WORKFLOW'):
-    DATABASES = {
-        'default': {
-           'ENGINE': 'django.db.backends.postgresql',
-           'NAME': 'django_db_test',
-           'USER': 'django_user_test',
-           'PASSWORD': 'pass_test',
-           'HOST': '127.0.0.1',
-           'PORT': 5432,
-        }
-    }
-    SECRET_KEY = 'test_key'
-    DEBUG = True
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
