@@ -47,4 +47,4 @@ __pycache__/
 
 db.sqlite3
 venv/
-*/dev_settings.py
+.env

@@ -14,10 +14,4 @@ COPY req.txt .
 
 RUN pip install -r req.txt
 
-RUN addgroup -S app && adduser -S app -G app
-
-RUN chown -R app:app /job_filter_app
-
-USER app
-
 COPY . .
