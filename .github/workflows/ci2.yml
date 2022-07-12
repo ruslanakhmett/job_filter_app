@@ -19,9 +19,7 @@ jobs:
         run: pip install -r req.txt
       - name: run tests
         run: python manage.py test
-
-
- build_and_pub:
+  build_and_pub:
     # Если тесты были пройдены успешно
     needs: [run_tests]
     runs-on: [ubuntu-latest]
