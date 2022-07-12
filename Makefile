@@ -1,6 +1,7 @@
 rebuild:
 	docker-compose down -v
-	docker-compose up -d --build
+	docker-compose -f docker-compose.yml build
+	docker-compose -f docker-compose.yml up -d
 
 stop:
 	docker-compose stop
@@ -12,6 +13,6 @@ dbin:
 	docker-compose exec db psql --username=django_user --dbname=django_db_docker
 
 delete:
-	docker container prune
-	docker image prune
-	docker volume prune
+	docker container prune -f
+	docker image prune -f 
+	docker volume prune -f

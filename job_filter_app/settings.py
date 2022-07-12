@@ -8,17 +8,17 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config("DEBUG", 0)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS")
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '80.87.198.203']
 
 
 DATABASES = {
     "default": {
-        "ENGINE": config("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": config("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": config("POSTGRES_USER", "user"),
-        "PASSWORD": config("POSTGRES_PASSWORD", "password"),
-        "HOST": config("SQL_HOST", "localhost"),
-        "PORT": config("SQL_PORT", "5432"),
+        "ENGINE": config("SQL_ENGINE"),
+        "NAME": config("POSTGRES_DB"),
+        "USER": config("POSTGRES_USER"),
+        "PASSWORD": config("POSTGRES_PASSWORD"),
+        "HOST": config("SQL_HOST"),
+        "PORT": config("SQL_PORT"),
     }
 }
 
