@@ -16,11 +16,22 @@ DATABASES = {
         "NAME": 'django_db',
         "USER": 'django_user',
         "PASSWORD": '12345wW!',
-        "HOST": '127.0.0.1',
+        "HOST": 'db',
         "PORT": 5432,
     }
 }
 
+if os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'django_db',
+           'USER': 'django_user',
+           'PASSWORD': '12345wW!',
+           'HOST': '127.0.0.1',
+           'PORT': 5432,
+        }
+    }
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
 
