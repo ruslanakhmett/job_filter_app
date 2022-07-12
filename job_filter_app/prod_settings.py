@@ -8,7 +8,7 @@ SECRET_KEY = config("SECRET_KEY", 'Not found')
 
 DEBUG = config("DEBUG", 0)
 
-ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS")
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 DATABASES = {
