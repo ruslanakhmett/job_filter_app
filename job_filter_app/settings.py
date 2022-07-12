@@ -29,12 +29,12 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '80.87.198.203']
 
 DATABASES = {
     "default": {
-        "ENGINE": config("SQL_ENGINE"),
-        "NAME": config("POSTGRES_DB"),
-        "USER": config("POSTGRES_USER"),
-        "PASSWORD": config("POSTGRES_PASSWORD"),
-        "HOST": config("SQL_HOST"),
-        "PORT": config("SQL_PORT"),
+        "ENGINE": config("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": config("POSTGRES_DB", "reserv_db"),
+        "USER": config("POSTGRES_USER", "reserv_user"),
+        "PASSWORD": config("POSTGRES_PASSWORD", "reserv_pass"),
+        "HOST": config("SQL_HOST", "127.0.0.1"),
+        "PORT": config("SQL_PORT", 5432),
     }
 }
 
