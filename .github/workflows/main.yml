@@ -12,11 +12,11 @@ jobs:
       matrix:
         python-version: [3.8]
         database-name:
-          - django_db
+          - django_db2
         database-password:
-          - 12345wW!
+          - 12345wW!2
         database-user:
-          - django_user
+          - django_user2
         database-host:
           - 127.0.0.1
         database-port:
@@ -87,6 +87,7 @@ jobs:
         export ALLOWED_HOSTS=127.0.0.1
         export GITHUB_WORKFLOW=True
         export MODE=workflow
+        python manage.py flush --no-input
         python manage.py makemigrations
         python manage.py migrate
         python manage.py migrate --run-syncdb
