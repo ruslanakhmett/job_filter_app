@@ -1,5 +1,4 @@
 import os
-from .prod_settings import *
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,7 +16,7 @@ DATABASES = {
         "NAME": 'django_db',
         "USER": 'django_user',
         "PASSWORD": '12345wW!',
-        "HOST": 'db',
+        "HOST": '127.0.0.1',
         "PORT": 5432,
     }
 }
