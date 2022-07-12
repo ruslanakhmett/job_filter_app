@@ -17,10 +17,12 @@ MarkupSafe==2.1.1
 psycopg2==2.9.3
 psycopg2-binary==2.9.3
 pyTelegramBotAPI==4.6.0
+python-decouple==3.6
 pytz==2022.1
 requests==2.28.1
 sqlparse==0.4.2
 supertools==1.0.1
+supervisor==4.2.4
 typing_extensions==4.3.0
 tzdata==2022.1
 urllib3==1.26.9

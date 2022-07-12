@@ -1,10 +1,5 @@
 import os
-
-
-try:
-    from .dev_settings import *
-except ImportError:
-    from .prod_settings import *
+from .prod_settings import *
 
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
