@@ -77,12 +77,12 @@ jobs:
         POSTGRES_DB: ${{ matrix.database-name }}
       run: |
         export DATABASE_URL=postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        export SECRET_KEY=refwekj4kj54kj35nr43fj34f42lf4
+        export SECRET_KEY=test_key
         export DEBUG=1
     - name: Run migrations
       run: |
         export DATABASE_URL=postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        export SECRET_KEY=refwekj4kj54kj35nr43fj34f42lf4
+        export SECRET_KEY=test_key
         export DEBUG=1
         export ALLOWED_HOSTS=127.0.0.1
         export GITHUB_WORKFLOW=True
@@ -97,7 +97,7 @@ jobs:
           python manage.py test
       env:
         DATABASE_URL: postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        SECRET_KEY: refwekj4kj54kj35nr43fj34f42lf4
+        SECRET_KEY: test_key
         DEBUG: 1
         ALLOWED_HOSTS: 127.0.0.1
         GITHUB_WORKFLOW: True

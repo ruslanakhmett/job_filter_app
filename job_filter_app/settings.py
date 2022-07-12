@@ -4,6 +4,11 @@ from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = config("SECRET_KEY")
+
+DEBUG = config("DEBUG", 0)
+
+ALLOWED_HOSTS = config("ALLOWED_HOSTS")
 
 
 DATABASES = {
@@ -17,16 +22,6 @@ DATABASES = {
     }
 }
 
-DATABASES = {
-    "default": {
-        "ENGINE": 'django.db.backends.postgresql',
-        "NAME": 'django_db',
-        "USER": 'django_user',
-        "PASSWORD": '12345wW!',
-        "HOST": 'db',
-        "PORT": 5432,
-    }
-}
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
@@ -39,7 +34,7 @@ if os.environ.get('GITHUB_WORKFLOW'):
            'PORT': 5432,
         }
     }
-    SECRET_KEY = 'refwekj4kj54kj35nr43fj34f42lf4'
+    SECRET_KEY = 'test_key'
     DEBUG = True
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
