@@ -110,8 +110,15 @@ jobs:
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose_ci.yml" down
-    - name: publish
-      uses: pennsignals/publish_docker-compose@v0.1.0
+  
+    - name: Start Deployment
+      uses: TapTap21/docker-remote-deployment-action@v1.0
       with:
-        docker_compose: 'docker-compose_ci.yml' # required
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        remote_docker_host: root@80.87.198.203
+        ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+        ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+        stack_file_name: docker-compose.yml
+        docker_login_password: ${{ secrets.DOCKER_PWD }}
+        docker_login_user: ${{ secrets.DOCKER_LOGIN }}
+        docker_login_registry : ${{ secrets.DOCKER_NAME }}
+        args: -p myapp up -d
