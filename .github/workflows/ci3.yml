@@ -39,12 +39,12 @@ jobs:
       - name: Build image
         # Собираем image и называем его так как указано в hub.docker т.е. login/repository:version
         #run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
-        run: docker-compose -f docker-compose_ci.yml build
+        run: docker-compose -f build
       #- name: Push image to docker.io
         # Пушим образ в registry
       #  run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
       - name: Push image to DO Container Registry
-        run: docker-compose -f docker-compose_ci.yml push
+        run: docker-compose -f push
 
       # - name: Build the images and start the containers
       #   run: |
