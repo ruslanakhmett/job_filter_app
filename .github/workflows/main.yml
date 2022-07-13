@@ -110,7 +110,6 @@ jobs:
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose_ci.yml" down
-  
     - name: Start Deployment
       uses: TapTap21/docker-remote-deployment-action@v1.0
       with:
