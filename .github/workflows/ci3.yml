@@ -17,6 +17,8 @@ jobs:
       - name: Install requirements
         # Устанавливаем зависимости
         run: pip install -r req.txt
+      - name: Install compose
+        run: pip install --upgrade --force-reinstall --no-cache-dir docker-compose && ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
   build_and_pub:
     # Если тесты были пройдены успешно
     needs: [run_tests]
