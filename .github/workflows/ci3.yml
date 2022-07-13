@@ -32,20 +32,20 @@ jobs:
       - name: Build image
         # Собираем image и называем его так как указано в hub.docker т.е. login/repository:version
         #run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
-        run: docker compose -f "docker-compose_ci.yml" build
+        run: docker-compose -f docker-compose_ci.yml build
       #- name: Push image to docker.io
         # Пушим образ в registry
       #  run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
       - name: Push image to DO Container Registry
-        run: docker compose -f "docker-compose_ci.yml" push
+        run: docker-compose -f docker-compose_ci.yml push
 
-      - name: Build the images and start the containers
-        run: |
-          export GITHUB_WORKFLOW=True
-          export MODE="Test"
-          docker-compose -f "docker-compose_ci.yml" build
-          docker-compose -f "docker-compose_ci.yml" up -d
-          # run: docker-compose up -d --build
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose_ci.yml" down
+      # - name: Build the images and start the containers
+      #   run: |
+      #     export GITHUB_WORKFLOW=True
+      #     export MODE="Test"
+      #     docker-compose -f docker-compose_ci.yml build
+      #     docker-compose -f docker-compose_ci.yml up -d
+      #     # run: docker-compose up -d --build
+      # - name: Stop containers
+      #   if: always()
+      #   run: docker-compose -f "docker-compose_ci.yml" down
