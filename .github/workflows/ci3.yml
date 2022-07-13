@@ -31,6 +31,11 @@ jobs:
         # Сначала мы логинимся в docker.io
         run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
         # Чекаутим код
+      - name: Create env file
+        run: |
+          touch .env
+          echo "${{ secrets.SERVER_ENV_PROD }}" > .env
+          cat .env
       - name: Build image
         # Собираем image и называем его так как указано в hub.docker т.е. login/repository:version
         #run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
