@@ -42,12 +42,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Create env file
-      run: |
-        touch .env
-        echo "${{ secrets.SERVER_ENV_PROD }}" > .env
-        cat .env
-    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -100,17 +94,6 @@ jobs:
         python manage.py migrate
         python manage.py migrate --run-syncdb
         python manage.py check
-    
-    - name: Run tests
-      run: |
-          python manage.py test
-      env:
-        DATABASE_URL: postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-        SECRET_KEY: test_key
-        DEBUG: 1
-        ALLOWED_HOSTS: 127.0.0.1
-        GITHUB_WORKFLOW: True
-        MODE: workflow
 
     - uses: actions/checkout@v2.4.0
     - name: Build the images and start the containers
@@ -124,7 +107,13 @@ jobs:
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose_ci.yml" down
-    
+
+    - name: Create env file
+      run: |
+        touch .env
+        echo "${{ secrets.SERVER_ENV_PROD }}" > .env
+        cat .env
+
     - name: Start Deployment
       uses: TapTap21/docker-remote-deployment-action@v1.0
       with:
