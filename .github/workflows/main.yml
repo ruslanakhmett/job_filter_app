@@ -107,21 +107,17 @@ jobs:
         docker-compose -f docker-compose_ci.yml build
         docker-compose -f docker-compose_ci.yml up -d
         # run: docker-compose up -d --build
-    - name: Create env file
-        run: |
-          touch .env
-          echo "${{ secrets.SERVER_ENV_PROD }}" > .env
-          cat .env
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose_ci.yml" down
+    
     - name: Start Deployment
       uses: TapTap21/docker-remote-deployment-action@v1.0
       with:
         remote_docker_host: root@80.87.198.203
         ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
         ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-        stack_file_name: docker-compose.yml
+        stack_file_name: docker-compose_ci.yml
         docker_login_password: ${{ secrets.DOCKER_PWD }}
         docker_login_user: ${{ secrets.DOCKER_LOGIN }}
         #docker_login_registry : ${{ secrets.DOCKER_NAME }}
