@@ -21,15 +21,14 @@ services:
         python manage.py collectstatic --no-input --clear
         python manage.py makemigrations
         python manage.py migrate --noinput
-        nohup python3 manage.py hookbot &
+        nohup python manage.py hookbot &
         python manage.py createsuperuserwithpassword --username $${DJANGO_SUPERUSER_USERNAME} --password $${DJANGO_SUPERUSER_PASSWORD} --email $${DJANGO_SUPERUSER_EMAIL} --preserve
         gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/job_filter_app/staticfiles
     restart: always
-    network_mode: host
-    links:
-      - db
+    ports:
+      - 8443:8443
     expose:
       - 8000
     depends_on:
