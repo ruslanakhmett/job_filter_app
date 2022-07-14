@@ -46,10 +46,10 @@ jobs:
       run: |
         touch .env
         echo "${{ secrets.SERVER_ENV_PROD }}" > .env
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r req.txt
+    # - name: Install dependencies
+    #   run: |
+    #     python -m pip install --upgrade pip
+    #     pip install -r req.txt
     # - name: Format with black
     #   run: |
     #     pip install black
@@ -106,16 +106,16 @@ jobs:
     # - uses: actions/checkout@v2.4.0
     
     
-    - name: Build the images and start the containers
-      run: |
-        export GITHUB_WORKFLOW=True
-        export MODE="Test"
-        docker-compose -f docker-compose_ci.yml build
-        docker-compose -f docker-compose_ci.yml up -d
-        # run: docker-compose up -d --build
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f "docker-compose_ci.yml" down
+    # - name: Build the images and start the containers
+    #   run: |
+    #     export GITHUB_WORKFLOW=True
+    #     export MODE="Test"
+    #     docker-compose -f docker-compose_ci.yml build
+    #     docker-compose -f docker-compose_ci.yml up -d
+    #     # run: docker-compose up -d --build
+    # - name: Stop containers
+    #   if: always()
+    #   run: docker-compose -f "docker-compose_ci.yml" down
     
     - name: Start Deployment
       uses: TapTap21/docker-remote-deployment-action@v1.0
@@ -127,5 +127,5 @@ jobs:
         docker_login_password: ${{ secrets.DOCKER_PWD }}
         docker_login_user: ${{ secrets.DOCKER_LOGIN }}
         #docker_login_registry : ${{ secrets.DOCKER_NAME }}
-        args: -p job_filter_app up -d
+        args: -p job_filter_app up --build -d
 #343243
