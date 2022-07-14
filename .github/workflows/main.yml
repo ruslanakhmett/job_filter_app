@@ -105,8 +105,7 @@ jobs:
     #     GITHUB_WORKFLOW: True
     #     MODE: workflow
     # - uses: actions/checkout@v2.4.0
-    
-    
+
     # - name: Build the images and start the containers
     #   run: |
     #     export GITHUB_WORKFLOW=True
