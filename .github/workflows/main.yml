@@ -107,6 +107,11 @@ jobs:
         docker-compose -f docker-compose_ci.yml build
         docker-compose -f docker-compose_ci.yml up -d
         # run: docker-compose up -d --build
+    - name: Create env file
+        run: |
+          touch .env
+          echo "${{ secrets.SERVER_ENV_PROD }}" > .env
+          cat .env
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose_ci.yml" down
