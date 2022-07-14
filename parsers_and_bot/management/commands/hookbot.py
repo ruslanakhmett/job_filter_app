@@ -72,7 +72,7 @@ class Command(BaseCommand):
                     
                     bot.send_message(message.chat.id, f'Начинаем поиск по вакансиям {user_set.vacancy_name} в городе {user_set.sity}.')
                     
-                    #go_parse_sj(vacancy_name, user_name, message.chat.id, sity, time_start_unix, only_with_salary, salary_max, salary_min)
+                    go_parse_sj(vacancy_name, user_name, message.chat.id, sity, time_start_unix, only_with_salary, salary_max, salary_min)
                     
                     sleep(2)
 

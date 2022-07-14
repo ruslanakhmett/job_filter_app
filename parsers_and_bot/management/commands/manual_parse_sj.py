@@ -4,10 +4,8 @@ from decouple import config
 import os
 
 
-if os.environ.get('GITHUB_WORKFLOW'):
-    SECRET_KEY = 'no matter'
-else:
-    SECRET_KEY = config("SECRET_KEY_SJ")
+
+SECRET_KEY = config("SECRET_KEY_SJ")
 SUPER_JOB_API = f'https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]='
 #super_job_api = 'https://api.superjob.ru/2.0/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]=python программист'
 headers = {'X-Api-App-Id': SECRET_KEY}
