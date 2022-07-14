@@ -5,7 +5,7 @@ import os
 
 
 
-SECRET_KEY = config("SECRET_KEY_SJ")
+SECRET_KEY = 'v3.h.4216098.4c73b41904ddadb70fed26eeabe10cd3f497b5be.63a1b654102ff3a355cbdfd8a34deb75cf7e110f'
 SUPER_JOB_API = f'https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]='
 #super_job_api = 'https://api.superjob.ru/2.0/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]=python программист'
 headers = {'X-Api-App-Id': SECRET_KEY}
