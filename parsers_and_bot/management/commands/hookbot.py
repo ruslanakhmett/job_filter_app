@@ -8,9 +8,9 @@ from .manual_parse_sj import go_parse_sj
 from random import randint
 
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        
         TOKEN = '1767277269:AAHra9hNFGHeE6qhttrG-s_h-HdGf3cH0IA'
         WEBHOOK_HOST = '80.87.198.203'
         WEBHOOK_PORT = 8443
