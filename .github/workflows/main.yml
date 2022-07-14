@@ -127,5 +127,5 @@ jobs:
         docker_login_password: ${{ secrets.DOCKER_PWD }}
         docker_login_user: ${{ secrets.DOCKER_LOGIN }}
         #docker_login_registry : ${{ secrets.DOCKER_NAME }}
-        args: -p job_filter_app --build up -d
+        args: -p job_filter_app up --build -d
 #343243
