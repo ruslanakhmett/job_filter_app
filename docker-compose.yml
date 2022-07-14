@@ -9,6 +9,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
+    links:
+      - web
 
     restart: always
 
@@ -29,6 +31,10 @@ services:
       - static_volume:/job_filter_app/staticfiles
     restart: always
     network_mode: host
+    links:
+      - db
+      - nginx
+      - supervisor
     expose:
       - 8000
     depends_on:
