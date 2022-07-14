@@ -119,6 +119,6 @@ jobs:
         stack_file_name: docker-compose.yml
         docker_login_password: ${{ secrets.DOCKER_PWD }}
         docker_login_user: ${{ secrets.DOCKER_LOGIN }}
-        docker_login_registry : ${{ secrets.DOCKER_NAME }}
+        #docker_login_registry : ${{ secrets.DOCKER_NAME }}
         args: -p myapp up -d
 #343243
