@@ -72,7 +72,7 @@ class Command(BaseCommand):
                     
                     bot.send_message(message.chat.id, f'Начинаем поиск по вакансиям {user_set.vacancy_name} в городе {user_set.sity}.')
                     
-                    go_parse_sj(vacancy_name, user_name, message.chat.id, sity, time_start_unix, only_with_salary, salary_max, salary_min)
+                    #go_parse_sj(vacancy_name, user_name, message.chat.id, sity, time_start_unix, only_with_salary, salary_max, salary_min)
                     
                     sleep(2)
 
@@ -100,7 +100,7 @@ class Command(BaseCommand):
 
             added_new_vac = go_parse_hh(vacancy_name_durty, user_name, message.chat.id, sity, time_start, only_with_salary, salary_max, salary_min) #берем return функции, там количество найденных за конкретный проход
             sleep(1)
-            added_new_vac += go_parse_sj(vacancy_name, user_name, message.chat.id, sity, time_start_unix, only_with_salary, salary_max, salary_min)
+            #added_new_vac += go_parse_sj(vacancy_name, user_name, message.chat.id, sity, time_start_unix, only_with_salary, salary_max, salary_min)
             sleep(1)
             if added_new_vac == Vacancy.objects.all().filter(tg_id=message.chat.id).count():
                 bot.send_message(message.chat.id, f"Нашли {added_new_vac} подходящих вакансий") 
