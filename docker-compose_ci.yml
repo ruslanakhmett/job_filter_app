@@ -11,16 +11,16 @@ services:
 
   web:
     build: .
-
     entrypoint: ["/bin/sh","-c"]
     command:
     -  |
-        python manage.py collectstatic --no-input --clear
-        nohup python3 manage.py poolbot &
+        nohup python manage.py hookbot &
         gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/job_filter_app/staticfiles
     restart: always
+    ports:
+      - 8443:8443
     expose:
       - 8000
     depends_on:
