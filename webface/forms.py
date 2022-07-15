@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from parsers_and_bot.models import Global_Users
 from datetime import datetime
 
 
@@ -25,6 +24,6 @@ class AddSearch(forms.Form):
     vacancy_name = forms.CharField(label='наименование вакансии, например Системный администратор, Java Junior и т.д', widget=forms.TextInput(attrs={"class": "form-control"}))
     sity = forms.CharField(label='город', initial='Москва', widget=forms.TextInput(attrs={"class": "form-control"}))
     salary_min = forms.IntegerField(label='желаемая зарплата от (если ищем с любой, оставь 0)', initial=0, widget=forms.TextInput(attrs={"class": "form-control"}))
-    salary_max = forms.IntegerField(label='желаемая зарплата до (если ищем с любой, оставь 0)', initial=0, widget=forms.TextInput(attrs={"class": "form-control"})) 
+    salary_max = forms.IntegerField(label='желаемая зарплата до (если ищем с любой, оставь 0)', initial=0, widget=forms.TextInput(attrs={"class": "form-control"}))
     start_when = forms.CharField(label='опубликованные, начиная с', initial=str(datetime.now().date()), widget=forms.TextInput(attrs={"class": "form-control"}))
     only_with_salary = forms.CharField(label='только с указанной зарплатой', initial=False, widget=forms.TextInput(attrs={"class": "form-control"}))

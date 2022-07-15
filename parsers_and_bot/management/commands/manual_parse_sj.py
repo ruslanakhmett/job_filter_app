@@ -1,10 +1,12 @@
-import requests, json, time, datetime
+import requests
+import json
+import time
+import datetime
 from parsers_and_bot.models import Vacancy
 
 
 SECRET_KEY = "v3.h.4216098.4c73b41904ddadb70fed26eeabe10cd3f497b5be.63a1b654102ff3a355cbdfd8a34deb75cf7e110f"
-SUPER_JOB_API = f"https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]="
-# super_job_api = 'https://api.superjob.ru/2.0/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]=python программист'
+SUPER_JOB_API = "https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]="
 headers = {"X-Api-App-Id": SECRET_KEY}
 
 
@@ -26,7 +28,7 @@ def go_parse_sj(
         "date_published_from": start_when_unix,
         "payment_from": salary_min,
         "payment_to": salary_max,
-        "no_agreement": int(only_with_salary),  # 1 не показывать без з/п
+        "no_agreement": int(only_with_salary),
     }
 
     req = requests.get(SUPER_JOB_API + vacancy_name, params=payload, headers=headers)
@@ -46,7 +48,6 @@ def go_parse_sj(
     count = 0
 
     for objects in jsonObj["objects"]:
-        # if vacancy_name.split()[1].upper() in objects['profession'].upper():
         vac_id = objects["id"]
         name = objects["profession"]
         url = objects["link"]
@@ -56,7 +57,7 @@ def go_parse_sj(
         published_time = str(
             datetime.datetime.fromtimestamp(objects["date_published"])
         ).split()[1]
-        
+
         try:
             Vacancy.objects.create(
                 vac_id=vac_id,
@@ -68,6 +69,6 @@ def go_parse_sj(
                 tg_id=tg_chat_id,
             )
             count += 1
-        except:
+        except Exception:
             continue
     return count

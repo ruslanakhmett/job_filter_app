@@ -14,6 +14,7 @@ class Vacancy(models.Model):
     def __str__(self):
         return self.name
 
+
 class Global_Users(models.Model):
     name = models.CharField(max_length=250, blank=True)
     email = models.EmailField(max_length=250, blank=True)

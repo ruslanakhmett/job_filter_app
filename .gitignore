@@ -49,3 +49,4 @@ db.sqlite3
 venv/
 .env
 django_db
+*/poolbot.py

@@ -38,6 +38,19 @@ DATABASES = {
     }
 }
 
+#for dev
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_db",
+        "USER": "django_user",
+        "PASSWORD": "12345wW!",
+        "HOST": "127.0.0.1",
+        "PORT":  5432,
+    }
+}
+
+
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
 
