@@ -38,7 +38,7 @@ DATABASES = {
     }
 }
 
-#for local dev
+# for local dev
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
@@ -50,10 +50,7 @@ DATABASES = {
 #     }
 # }
 
-
-
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -77,9 +74,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'job_filter_app.urls'
-
 
 TEMPLATES = [
     {
@@ -97,9 +92,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'job_filter_app.wsgi.application'
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
