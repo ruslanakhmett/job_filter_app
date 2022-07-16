@@ -1,6 +1,5 @@
 import requests
 import json
-import time
 import datetime
 import logging.config
 from .logger_config import configuring_dict
