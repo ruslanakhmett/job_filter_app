@@ -50,7 +50,9 @@ DATABASES = {
 #     }
 # }
 
+
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
