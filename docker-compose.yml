@@ -21,7 +21,7 @@ services:
         python manage.py collectstatic --no-input --clear
         python manage.py makemigrations
         python manage.py migrate --noinput
-        nohup python manage.py hookbot &
+        nohup python manage.py hookbot > ./logs/nohup.log &
         python manage.py createsuperuserwithpassword --username $${DJANGO_SUPERUSER_USERNAME} --password $${DJANGO_SUPERUSER_PASSWORD} --email $${DJANGO_SUPERUSER_EMAIL} --preserve
         gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
     volumes:
