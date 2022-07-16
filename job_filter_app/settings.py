@@ -39,16 +39,16 @@ DATABASES = {
 }
 
 #for local dev
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "django_db",
-#         "USER": "django_user",
-#         "PASSWORD": "12345wW!",
-#         "HOST": "127.0.0.1",
-#         "PORT":  5432,
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_db",
+        "USER": "django_user",
+        "PASSWORD": "12345wW!",
+        "HOST": "127.0.0.1",
+        "PORT":  5432,
+    }
+}
 
 
 

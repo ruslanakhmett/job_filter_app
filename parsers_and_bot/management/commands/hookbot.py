@@ -1,11 +1,17 @@
 import time
 import flask
 import telebot
+import logging.config
 from random import randint
 from parsers_and_bot.models import Vacancy, Global_Users
 from django.core.management.base import BaseCommand
 from .manual_parse_hh import go_parse_hh
 from .manual_parse_sj import go_parse_sj
+from logger_config import configuring_dict
+
+
+logging.config.dictConfig(configuring_dict)
+logger = logging.getLogger('app_logger')
 
 
 class Command(BaseCommand):
@@ -39,12 +45,14 @@ class Command(BaseCommand):
         # старт, получаем chat_id, запускаем первый поиск
         @bot.message_handler(commands=["start"])
         def send_welcome(message):  # noqa F811
-
-            user_name = message.text.split()[1]
-            # вытаскиваем имя юзера как оно есть на сайте
-            Global_Users.objects.filter(name=user_name).update(
-                tg_chat_id=message.chat.id
-            )  # устанавливаем связь имени и chatid телеги
+            user_name = message.text.split()[1]  # вытаскиваем имя юзера как оно есть на сайте
+            try:
+                Global_Users.objects.filter(name=user_name).update(
+                    tg_chat_id=message.chat.id
+                )  # устанавливаем связь имени и chatid телеги
+                logger.info('tg_id OK')
+            except Exception as error:
+                logger.exception(error)
 
             for user in Global_Users.objects.all():
                 if (
@@ -58,15 +66,20 @@ class Command(BaseCommand):
                 ):
                     bot.send_message(
                         message.chat.id,
-                        "Извините, но к аккаунту JobFIlter можно привязать только один Telegram аккаунт, работа не может быть продолжена.",
+                        "Извините, но к одному Telegram аккаунту можно привязать только один аккаунт JobFIlter, работа не может быть продолжена.",
                     )
                     break
                 else:
                     bot.send_message(
                         message.chat.id,
-                        f"Здравствуйте {user_name}, это JobFilter бот.\n Он поможет собирать в одном месте только интересующие Вас вакансии из разных источников.",
+                        f"Здравствуйте {user_name}, это JobFilter бот.\n"
+                        "Он поможет собирать в одном месте только интересующие Вас вакансии из разных источников.",
                     )
-                    user_set = Global_Users.objects.get(name=user_name)
+                    try:
+                        user_set = Global_Users.objects.get(name=user_name)
+                    except Exception as error:
+                        logger.exception(error)
+
                     vacancy_name = user_set.vacancy_name
                     vacancy_name_durty = user_set.vacancy_name_durty
                     sity = user_set.sity
@@ -76,35 +89,40 @@ class Command(BaseCommand):
                     salary_max = user_set.salary_max
                     salary_min = user_set.salary_min
 
-                    go_parse_hh(
-                        vacancy_name_durty,
-                        user_name,
-                        message.chat.id,
-                        sity,
-                        time_start,
-                        only_with_salary,
-                        salary_max,
-                        salary_min,
-                    )
+                    try:
+                        go_parse_hh(
+                            vacancy_name_durty,
+                            user_name,
+                            message.chat.id,
+                            sity,
+                            time_start,
+                            only_with_salary,
+                            salary_max,
+                            salary_min,
+                        )
+                        logger.info('parsing hh OK')
+                    except Exception as error:
+                        logger.exception(error)
 
-                    time.sleep(2)
                     bot.send_message(
                         message.chat.id,
                         f"Начинаем поиск по вакансиям {user_set.vacancy_name} в городе {user_set.sity}.",
                     )
+                    try:
+                        go_parse_sj(
+                            vacancy_name,
+                            user_name,
+                            message.chat.id,
+                            sity,
+                            time_start_unix,
+                            only_with_salary,
+                            salary_max,
+                            salary_min,
+                        )
+                        logger.info('parsing sj OK')
+                    except Exception as error:
+                        logger.exception(error)
 
-                    go_parse_sj(
-                        vacancy_name,
-                        user_name,
-                        message.chat.id,
-                        sity,
-                        time_start_unix,
-                        only_with_salary,
-                        salary_max,
-                        salary_min,
-                    )
-
-                    time.sleep(2)
                     bot.send_message(
                         message.chat.id,
                         f"Нашли {Vacancy.objects.all().filter(tg_id=message.chat.id).count()} подходящих вакансий.",
@@ -119,7 +137,11 @@ class Command(BaseCommand):
         @bot.message_handler(commands=["run_find"])
         def start_command(message):  # noqa F811
             bot.send_message(message.chat.id, "Ищем...")
-            user_set = Global_Users.objects.get(tg_chat_id=message.chat.id)
+            try:
+                user_set = Global_Users.objects.get(tg_chat_id=message.chat.id)
+            except Exception as error:
+                logger.exception(error)
+
             user_name = user_set.name
             vacancy_name = user_set.vacancy_name
             vacancy_name_durty = user_set.vacancy_name_durty
@@ -130,28 +152,36 @@ class Command(BaseCommand):
             salary_max = user_set.salary_max
             salary_min = user_set.salary_min
 
-            added_new_vac = go_parse_hh(
-                vacancy_name_durty,
-                user_name,
-                message.chat.id,
-                sity,
-                time_start,
-                only_with_salary,
-                salary_max,
-                salary_min,
-            )  # берем return функции, там количество найденных за конкретный проход
-            time.sleep(1)
-            added_new_vac += go_parse_sj(
-                vacancy_name,
-                user_name,
-                message.chat.id,
-                sity,
-                time_start_unix,
-                only_with_salary,
-                salary_max,
-                salary_min,
-            )
-            time.sleep(1)
+            try:
+                added_new_vac = go_parse_hh(
+                    vacancy_name_durty,
+                    user_name,
+                    message.chat.id,
+                    sity,
+                    time_start,
+                    only_with_salary,
+                    salary_max,
+                    salary_min,
+                )  # берем так же return функции, там количество найденных за конкретный проход
+                logger.info('parsing hh OK')
+            except Exception as error:
+                logger.exception(error)
+
+            try:
+                added_new_vac += go_parse_sj(
+                    vacancy_name,
+                    user_name,
+                    message.chat.id,
+                    sity,
+                    time_start_unix,
+                    only_with_salary,
+                    salary_max,
+                    salary_min,
+                )
+                logger.info('parsing sj OK')
+            except Exception as error:
+                logger.exception(error)
+
             if (
                 added_new_vac
                 == Vacancy.objects.all().filter(tg_id=message.chat.id).count()
@@ -164,24 +194,30 @@ class Command(BaseCommand):
             else:
                 bot.send_message(
                     message.chat.id,
-                    f"Добавили еще {added_new_vac}, всего в базе {Vacancy.objects.all().filter(tg_id=message.chat.id).filter(is_shown = False).count()} непросмотренных вакансий",
+                    f"Добавили еще {added_new_vac}, для Вас есть {Vacancy.objects.all().filter(tg_id=message.chat.id).filter(is_shown = False).count()} непросмотренных вакансий",
                 )
 
         # запрос вакансии
         @bot.message_handler(commands=["give_me"])
         def start_command(message):  # noqa F811
-            number_vax = (
-                Vacancy.objects.all()
-                .filter(tg_id=message.chat.id)
-                .filter(is_shown=False)
-                .count()
-            )
+            try:    
+                number_vax = (
+                    Vacancy.objects.all()
+                    .filter(tg_id=message.chat.id)
+                    .filter(is_shown=False)
+                    .count()
+                )
+            except Exception as error:
+                logger.exception(error)
+
             if number_vax > 0:
+
                 vac = (
                     Vacancy.objects.all()
                     .filter(tg_id=message.chat.id)
                     .filter(is_shown=False)[randint(0, number_vax - 1)]
                 )
+
                 bot.send_message(message.chat.id, vac.url)
                 vac.is_shown = True
                 vac.save()
@@ -191,16 +227,19 @@ class Command(BaseCommand):
         # показать, сколько вакансий в базе на данный момент
         @bot.message_handler(commands=["show_number"])
         def start_command(message):  # noqa F811
-            number_vax = (
-                Vacancy.objects.all()
-                .filter(tg_id=message.chat.id)
-                .filter(is_shown=False)
-                .count()
-            )
+            try:
+                number_vax = (
+                    Vacancy.objects.all()
+                    .filter(tg_id=message.chat.id)
+                    .filter(is_shown=False)
+                    .count()
+                )
+            except Exception as error:
+                logger.exception(error)
+
             if number_vax > 0:
                 bot.send_message(
-                    message.chat.id, f"Есть {number_vax} непросмотренных вакансий"
-                )
+                    message.chat.id, f"Есть {number_vax} непросмотренных вакансий")
             else:
                 bot.send_message(message.chat.id, "В базе пусто")
 

@@ -1,7 +1,12 @@
 import requests
 import json
-import time
+import logging.config
+from .logger_config import configuring_dict
 from parsers_and_bot.models import Vacancy
+
+
+logging.config.dictConfig(configuring_dict)
+logger = logging.getLogger('app_logger')
 
 
 def go_parse_hh(
@@ -26,15 +31,16 @@ def go_parse_hh(
         req.close()
 
         jsObj = json.loads(data)
-        f = open("./resources/files_hh/files_hh/cityes_data.json", mode="w", encoding="utf8")
-        f.write(json.dumps(jsObj, ensure_ascii=False))
-        f.close()
+        with open("./resources/files_hh/files_hh/cityes_data.json", mode="w", encoding="utf8") as f:
+            f.write(json.dumps(jsObj, ensure_ascii=False))
 
-        time.sleep(1)
         # берем нужный id города в соответствии с введенным юзером названием для подстановки в запрос
-        f = open("./resources/files_hh/files_hhh/cityes_data.json", encoding="utf8")
-        jsonText = f.read()
-        f.close()
+        try:
+            with open("./resources/files_hh/files_hhh/cityes_data.json", encoding="utf8") as f:
+                jsonText = f.read()
+        except FileNotFoundError as error:
+            logger.exception(error)
+
         jsonObj = json.loads(jsonText)
 
         for item in jsonObj[0]["areas"]:
@@ -67,19 +73,20 @@ def go_parse_hh(
     req.close()
 
     jsObj = json.loads(data)
-    f = open("./resources/files_hh/data_file.json", mode="w", encoding="utf8")
-    f.write(json.dumps(jsObj, ensure_ascii=False))
-    f.close()
-    time.sleep(1)
+    with open("./resources/files_hh/data_file.json", mode="w", encoding="utf8") as f:
+        f.write(json.dumps(jsObj, ensure_ascii=False))
 
-    f = open("./resources/files_hh/data_file.json", encoding="utf8")
-    jsonText = f.read()
-    f.close()
+    try:
+        with open("./resources/files_hh/data_file.json", encoding="utf8") as f:
+            jsonText = f.read()
+    except FileNotFoundError as error:
+        logger.exception(error)
+
     jsonObj = json.loads(jsonText)
 
     count = 0
-    for param in jsonObj["items"]:
 
+    for param in jsonObj["items"]:
         vac_id = int(param["id"])
         name = param["name"]
         url = param["alternate_url"]
@@ -97,6 +104,6 @@ def go_parse_hh(
                 tg_id=tg_chat_id,
             )
             count += 1
-        except Exception:
-            continue
+        except Exception as error:
+            logger.exception(error)
     return count

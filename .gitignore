@@ -50,3 +50,4 @@ venv/
 .env
 django_db
 */poolbot.py
+logs

@@ -2,8 +2,12 @@ import requests
 import json
 import time
 import datetime
+import logging.config
+from .logger_config import configuring_dict
 from parsers_and_bot.models import Vacancy
 
+logging.config.dictConfig(configuring_dict)
+logger = logging.getLogger('app_logger')
 
 SECRET_KEY = "v3.h.4216098.4c73b41904ddadb70fed26eeabe10cd3f497b5be.63a1b654102ff3a355cbdfd8a34deb75cf7e110f"
 SUPER_JOB_API = "https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]="
@@ -35,14 +39,15 @@ def go_parse_sj(
     data = req.content.decode()
     req.close()
     jsObj = json.loads(data)
-    f = open("./resources/files_sj/data_file.json", mode="w", encoding="utf8")
-    f.write(json.dumps(jsObj, ensure_ascii=False))
-    f.close()
-    time.sleep(1)
 
-    f = open("./resources/files_sj/data_file.json", encoding="utf8")
-    jsonText = f.read()
-    f.close()
+    with open("./resources/files_sj/data_file.json", mode="w", encoding="utf8") as f:
+        f.write(json.dumps(jsObj, ensure_ascii=False))
+    try:
+        with open("./resources/files_sj/data_file.json", encoding="utf8") as f:
+            jsonText = f.read()
+    except FileNotFoundError as error:
+        logger.exception(error)
+
     jsonObj = json.loads(jsonText)
 
     count = 0
@@ -69,6 +74,6 @@ def go_parse_sj(
                 tg_id=tg_chat_id,
             )
             count += 1
-        except Exception:
-            continue
+        except Exception as error:
+            logger.exception(error)
     return count
