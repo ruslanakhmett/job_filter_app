@@ -26,6 +26,7 @@ services:
         gunicorn job_filter_app.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/job_filter_app/staticfiles
+      - logs:/job_filter_app/logs
     restart: always
     ports:
       - 8443:8443
@@ -53,3 +54,4 @@ services:
 volumes:
   postgres_data:
   static_volume:
+  logs:
