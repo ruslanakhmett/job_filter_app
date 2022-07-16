@@ -24,7 +24,7 @@ class Global_Users(models.Model):
     sity = models.CharField(max_length=250, blank=True)
     salary_min = models.IntegerField()
     salary_max = models.IntegerField()
-    start_when = models.CharField(max_length=250, default=True)
+    start_when = models.CharField(max_length=250, blank=True)
     only_with_salary = models.BooleanField(default=False)
     start_when_unix = models.IntegerField(default=0)
 
