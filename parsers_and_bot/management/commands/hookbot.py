@@ -7,7 +7,7 @@ from parsers_and_bot.models import Vacancy, Global_Users
 from django.core.management.base import BaseCommand
 from .manual_parse_hh import go_parse_hh
 from .manual_parse_sj import go_parse_sj
-from logger_config import configuring_dict
+from .logger_config import configuring_dict
 
 
 logging.config.dictConfig(configuring_dict)
