@@ -38,10 +38,10 @@ DATABASES = {
     }
 }
 
-# # for local dev
+# for local dev
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
+#         "ENGINE": "django.db.backends.sqlite3",
 #         "NAME": "django_db",
 #         "USER": "django_user",
 #         "PASSWORD": "12345wW!",
