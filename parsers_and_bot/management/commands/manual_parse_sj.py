@@ -1,9 +1,12 @@
-import requests
-import json
 import datetime
+import json
 import logging.config
-from .logger_config import configuring_dict
+
+import requests
+
 from parsers_and_bot.models import Vacancy
+
+from .logger_config import configuring_dict
 
 logging.config.dictConfig(configuring_dict)
 logger = logging.getLogger('app_logger')

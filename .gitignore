@@ -38,16 +38,13 @@ nosetests.xml
 coverage.xml
 
 ### Django ###
-*.log
 *.pot
 *.pyc
 __pycache__/
 
 #my
-
 db.sqlite3
 venv/
 .env
 django_db
 */poolbot.py
-logs

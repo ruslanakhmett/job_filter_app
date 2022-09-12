@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, UserLoginForm, AddSearch
+import time
+
 from django.contrib import messages
 from django.contrib.auth import login, logout
-import time
+from django.shortcuts import redirect, render
+
 from parsers_and_bot.models import Global_Users, Vacancy
+
+from .forms import AddSearch, UserLoginForm, UserRegisterForm
 
 
 def home(request):

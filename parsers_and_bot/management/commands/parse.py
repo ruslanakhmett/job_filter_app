@@ -1,9 +1,11 @@
-import requests
+import datetime
 import json
 import time
-import datetime
+
+import requests
 from django.core.management.base import BaseCommand
-from parsers_and_bot.models import Vacancy, Global_Users
+
+from parsers_and_bot.models import Global_Users, Vacancy
 
 
 class Command(BaseCommand):

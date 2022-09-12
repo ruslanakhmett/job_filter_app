@@ -1,12 +1,14 @@
-import telebot
 import logging.config
 from random import randint
-from .logger_config import configuring_dict
+
+import telebot
 from django.core.management.base import BaseCommand
-from parsers_and_bot.models import Vacancy, Global_Users
+
+from parsers_and_bot.models import Global_Users, Vacancy
+
+from .logger_config import configuring_dict
 from .manual_parse_hh import go_parse_hh
 from .manual_parse_sj import go_parse_sj
-
 
 logging.config.dictConfig(configuring_dict)
 logger = logging.getLogger('app_logger')

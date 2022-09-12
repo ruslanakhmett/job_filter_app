@@ -1,6 +1,6 @@
 import os
-from decouple import config
 
+from decouple import config
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
@@ -37,18 +37,6 @@ DATABASES = {
         "PORT": config("SQL_PORT", 5432),
     }
 }
-
-# for local dev
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": "django_db",
-#         "USER": "django_user",
-#         "PASSWORD": "12345wW!",
-#         "HOST": "127.0.0.1",
-#         "PORT":  5432,
-#     }
-# }
 
 
 DJANGO_SETTINGS_MODULE="job_filter_app.settings"
@@ -124,3 +112,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = "/staticfiles/"
+
+try:
+    from .local_settings import *  # noqa F401, F403
+except ImportError:
+    pass
