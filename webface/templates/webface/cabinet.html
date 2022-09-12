@@ -36,8 +36,7 @@
       <h5 class="card-title">опубликованные с {{ start_when }}</h5>
       <h5 class="card-title">только с указанной з/п: {{ only_with_salary }}</h5>
       </div>
-      <!--<a href="https://t.me/headhunter_find_bot?start={{ user.username }}">go to tg</a>-->
-      <a href="https://t.me/test_ruslan3_bot?start={{ user.username }}">go to tg</a>
+      <a href="https://t.me/headhunter_find_bot?start={{ user.username }}">go to tg</a>
     {% else %}
     <a href="{% url 'add_search' %}">create search</a>
     {% endif %}
