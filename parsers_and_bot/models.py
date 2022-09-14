@@ -23,12 +23,9 @@ class Vacancy(models.Model):
     vac_id = models.IntegerField(primary_key=True)
     published_day = models.CharField(max_length=250, blank=True)
     published_time = models.CharField(max_length=250, blank=True)
-    for_user = models.ForeignKey(Global_Users, related_name = 'For_user', on_delete=models.CASCADE)
+    for_user = models.CharField(max_length=250, blank=True)
     tg_id = models.IntegerField(default=0)
     is_shown = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.for_user
-
-    class Meta:
-        ordering = ['for_user']
+        return self.name
