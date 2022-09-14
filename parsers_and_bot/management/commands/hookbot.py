@@ -49,7 +49,7 @@ class Command(BaseCommand):
         def send_welcome(message):  # noqa F811
             user_name = message.text.split()[1]  # вытаскиваем имя юзера как оно есть на сайте
             try:
-                Global_Users.objects.filter(name=user_name).update(
+                Global_Users.objects.filter(for_user=user_name).update(
                     tg_chat_id=message.chat.id
                 )  # устанавливаем связь имени и chatid телеги
                 logger.info('tg_id OK')
@@ -58,13 +58,13 @@ class Command(BaseCommand):
 
             for user in Global_Users.objects.all():
                 if (
-                    user_name == user.name
+                    user_name == user.for_user
                     and user.tg_chat_id > 1
                     and user.tg_chat_id != message.chat.id
                 ) or (
                     user.tg_chat_id > 1
                     and user.tg_chat_id == message.chat.id
-                    and user_name != user.name
+                    and user_name != user.for_user
                 ):
                     bot.send_message(
                         message.chat.id,
@@ -78,7 +78,7 @@ class Command(BaseCommand):
                         "Он поможет собирать в одном месте только интересующие Вас вакансии из разных источников.",
                     )
                     try:
-                        user_set = Global_Users.objects.get(name=user_name)
+                        user_set = Global_Users.objects.get(for_user=user_name)
                     except Exception as error:
                         logger.exception(error)
 
