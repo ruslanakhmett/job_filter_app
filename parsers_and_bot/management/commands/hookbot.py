@@ -144,7 +144,7 @@ class Command(BaseCommand):
             except Exception as error:
                 logger.exception(error)
 
-            user_name = user_set.name
+            user_name = user_set.for_user
             vacancy_name = user_set.vacancy_name
             vacancy_name_durty = user_set.vacancy_name_durty
             sity = user_set.sity
