@@ -3,6 +3,7 @@ from random import randint
 
 import telebot
 from django.core.management.base import BaseCommand
+from decouple import config
 
 from parsers_and_bot.models import Global_Users, Vacancy
 
@@ -16,7 +17,7 @@ logger = logging.getLogger('app_logger')
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        TOKEN = "5158172090:AAG415CmE0XEptlV2I7vPkAzya7m9ZfHpDo"
+        TOKEN = config("TEST_BOT_TOKEN")
         bot = telebot.TeleBot(TOKEN)
 
         # старт, получаем chat_id, запускаем первый поиск

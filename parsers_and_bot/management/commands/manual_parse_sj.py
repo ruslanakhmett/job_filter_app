@@ -7,13 +7,14 @@ import requests
 from parsers_and_bot.models import Vacancy
 
 from .logger_config import configuring_dict
+from decouple import config
 
 logging.config.dictConfig(configuring_dict)
 logger = logging.getLogger('app_logger')
 
-SECRET_KEY = "v3.h.4216098.4c73b41904ddadb70fed26eeabe10cd3f497b5be.63a1b654102ff3a355cbdfd8a34deb75cf7e110f"
+TOKEN = config("SJ_TOKEN")
 SUPER_JOB_API = "https://api.superjob.ru/2.33/vacancies/?keywords[srws][]=1&keywords[skwc][]=and&keywords[keys][]="
-headers = {"X-Api-App-Id": SECRET_KEY}
+headers = {"X-Api-App-Id": TOKEN}
 
 
 def go_parse_sj(

@@ -1,6 +1,7 @@
 import logging.config
 import time
 from random import randint
+from decouple import config
 
 import flask
 import telebot
@@ -18,7 +19,7 @@ logger = logging.getLogger('app_logger')
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        TOKEN = "1767277269:AAHra9hNFGHeE6qhttrG-s_h-HdGf3cH0IA"
+        TOKEN = config("PROD_BOT_TOKEN")
         WEBHOOK_HOST = "80.87.198.203"
         WEBHOOK_PORT = 8443
         WEBHOOK_LISTEN = "0.0.0.0"
